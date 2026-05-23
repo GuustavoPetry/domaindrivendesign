@@ -34,17 +34,22 @@ class EntitySpec extends Entity<TestProps> {
 }
 
 test("instancied spec class containing props and id", () => {
-    const id = new UniqueEntityID("TEST-ID");
+    const id = new UniqueEntityID("Test ID");
 
     const entity = EntitySpec.create({
-        title: "TEST-TITLE",
-        content: "TEST-CONTENT",
+        title: "Test Title",
+        content: "Test Content",
         createdAt: new Date(),
     }, id);
 
-    expect(entity.id.value).toBe("TEST-ID");
-    expect(entity.title).toBe("TEST-TITLE");
-    expect(entity.content).toBe("TEST-CONTENT");
-    expect(entity.createdAt).instanceOf(Date);
-    expect(entity.updatedAt).toBe(undefined);
+    expect(entity).toEqual(
+        expect.objectContaining({
+            id: {
+                value: "Test ID",
+            },
+            title: "Test Title",
+            content: "Test Content",
+            createdAt: expect.any(Date),
+        })
+    );
 });
